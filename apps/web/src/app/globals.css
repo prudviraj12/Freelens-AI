@@ -1,0 +1,175 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f6f7fb;
+  --foreground: #172033;
+  --panel: #ffffff;
+  --panel-muted: #f0f2f8;
+  --line: #e2e6ef;
+  --muted: #69748a;
+  --brand: #6657e8;
+  --brand-strong: #5142d5;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+.dark {
+  --background: #0f1420;
+  --foreground: #edf0f8;
+  --panel: #161d2c;
+  --panel-muted: #1c2536;
+  --line: #2b3548;
+  --muted: #9aa6bb;
+  --brand: #8b7cf6;
+  --brand-strong: #a99dfb;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  min-width: 320px;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--brand) 32%, transparent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--brand) 25%, transparent);
+}
+
+.markdown-answer {
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.markdown-answer > :first-child {
+  margin-top: 0;
+}
+
+.markdown-answer > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown-answer h1,
+.markdown-answer h2,
+.markdown-answer h3 {
+  margin: 1.1em 0 0.45em;
+  font-weight: 650;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+.markdown-answer h1 {
+  font-size: 1.35rem;
+}
+
+.markdown-answer h2 {
+  font-size: 1.18rem;
+}
+
+.markdown-answer h3 {
+  font-size: 1.05rem;
+}
+
+.markdown-answer p,
+.markdown-answer ul,
+.markdown-answer ol,
+.markdown-answer blockquote,
+.markdown-answer pre,
+.markdown-answer table {
+  margin: 0.7em 0;
+}
+
+.markdown-answer ul,
+.markdown-answer ol {
+  padding-left: 1.4rem;
+}
+
+.markdown-answer ul {
+  list-style: disc;
+}
+
+.markdown-answer ol {
+  list-style: decimal;
+}
+
+.markdown-answer li + li {
+  margin-top: 0.25rem;
+}
+
+.markdown-answer a {
+  color: var(--brand);
+  font-weight: 550;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.markdown-answer blockquote {
+  border-left: 3px solid var(--brand);
+  color: var(--muted);
+  padding-left: 0.9rem;
+}
+
+.markdown-answer code {
+  border-radius: 0.35rem;
+  background: var(--panel-muted);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.86em;
+  padding: 0.14rem 0.35rem;
+}
+
+.markdown-answer pre {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: var(--panel-muted);
+  padding: 0.9rem 1rem;
+}
+
+.markdown-answer pre code {
+  background: transparent;
+  padding: 0;
+}
+
+.markdown-answer table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.markdown-answer th,
+.markdown-answer td {
+  border: 1px solid var(--line);
+  padding: 0.5rem 0.7rem;
+  text-align: left;
+}
+
+.markdown-answer th {
+  background: var(--panel-muted);
+  font-weight: 650;
+}
+
+.markdown-answer hr {
+  margin: 1rem 0;
+  border-color: var(--line);
+}

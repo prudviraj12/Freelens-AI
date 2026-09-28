@@ -1,0 +1,237 @@
+# Freelens AI
+
+## Overview
+
+Freelens AI is an intelligent Operations AI Agent for freelance agencies.
+
+The AI manages company knowledge, freelancer information, client history, contracts, project details, and operational workflows.
+
+Unlike traditional chatbots, every interaction is stored inside Hindsight, allowing the agent to continuously improve its understanding of the business.
+
+Hindsight is the ONLY persistent storage for conversational memory and long-term organizational knowledge.
+
+---
+
+# Goal
+
+Build an AI Operations Assistant capable of remembering everything about a freelance company.
+
+The assistant should:
+
+- Understand freelancer profiles
+- Remember client requirements
+- Track project history
+- Store contracts
+- Recall previous conversations
+- Learn company workflows
+- Answer questions using long-term memory
+- Reduce manual searching across documents
+
+---
+
+# Core Principle
+
+Hindsight is the only memory database.
+
+DO NOT create custom memory databases.
+
+DO NOT store long-term memories in PostgreSQL, MongoDB, Redis, SQLite, or JSON files.
+
+Every important interaction MUST be written into Hindsight.
+
+Every retrieval MUST first query Hindsight.
+
+---
+
+# AI Agent Name
+
+HindsightOps
+
+---
+
+# Features
+
+## Freelancer Management
+
+Store
+
+- Skills
+- Experience
+- Hourly rate
+- Availability
+- Previous projects
+- Performance history
+
+Retrieve freelancer recommendations based on historical success.
+
+---
+
+## Client Management
+
+Remember
+
+- Client preferences
+- Communication style
+- Budget
+- Industry
+- Previous conversations
+- Previous contracts
+
+---
+
+## Contract Intelligence
+
+Store
+
+- Contracts
+- Amendments
+- Renewal dates
+- Milestones
+- Deliverables
+- Payment schedules
+
+Answer questions such as
+
+"What payment terms did Client X use?"
+
+"When does this contract expire?"
+
+---
+
+## Project Memory
+
+Remember
+
+- Project timeline
+- Requirements
+- Assigned freelancers
+- Risks
+- Deliverables
+- Previous discussions
+- Decisions
+
+---
+
+## Knowledge Search
+
+Natural language search over company knowledge.
+
+Examples
+
+"Show similar projects."
+
+"Who worked with this client before?"
+
+"Find contracts signed last month."
+
+---
+
+## Learning
+
+The AI continuously improves by remembering
+
+- user corrections
+- successful workflows
+- frequently accessed information
+- company terminology
+- recurring client requests
+
+---
+
+# Architecture
+
+Frontend
+
+- Next.js
+- React
+- TailwindCSS
+
+Backend
+
+- FastAPI
+
+LLM
+
+- OpenAI / Groq
+
+Memory
+
+- Hindsight ONLY
+
+Authentication
+
+- Clerk or JWT
+
+Deployment
+
+- Vercel
+- Railway / Render
+
+---
+
+# Memory Rules
+
+Every conversation:
+
+1. Analyze importance.
+
+2. If useful for future tasks:
+
+   Save to Hindsight.
+
+3. Before answering:
+
+   Search Hindsight.
+
+4. Combine retrieved memories with current context.
+
+---
+
+# Example Workflow
+
+User:
+
+"Client ABC wants another React developer."
+
+↓
+
+Search Hindsight
+
+↓
+
+Retrieve
+
+- previous projects
+- previous contracts
+- preferred freelancers
+- client preferences
+
+↓
+
+Generate recommendation
+
+↓
+
+Save new interaction into Hindsight
+
+---
+
+# Non Functional Requirements
+
+- Fast responses
+- Secure authentication
+- Role-based access
+- Scalable architecture
+- Persistent memory
+- Mobile responsive
+- Explainable AI decisions
+
+---
+
+# Success Criteria
+
+The AI should behave like an Operations Manager that never forgets.
+
+Every useful interaction should improve future responses through Hindsight memory.
+
+Memory is the primary feature, not an additional feature.

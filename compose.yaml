@@ -1,0 +1,75 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: freelens-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  minio:
+    build:
+      context: ./infra/minio
+      dockerfile: Dockerfile
+    image: freelens/minio-local:latest
+    container_name: freelens-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
+    volumes:
+      - minio-data:/data
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  hindsight:
+    image: ghcr.io/vectorize-io/hindsight:latest
+    container_name: freelens-hindsight
+    restart: unless-stopped
+    pull_policy: always
+    shm_size: "1gb"
+    ports:
+      - "127.0.0.1:8888:8888"
+      - "127.0.0.1:9999:9999"
+    environment:
+      HINDSIGHT_API_LLM_PROVIDER: ${HINDSIGHT_API_LLM_PROVIDER}
+      HINDSIGHT_API_LLM_API_KEY: ${GROQ_API_KEY:?Add GROQ_API_KEY to the local .env file}
+      HINDSIGHT_API_LLM_MODEL: ${HINDSIGHT_API_LLM_MODEL}
+      HINDSIGHT_API_LLM_GROQ_SERVICE_TIER: ${HINDSIGHT_API_LLM_GROQ_SERVICE_TIER}
+      HINDSIGHT_API_WORKER_ID: ${HINDSIGHT_API_WORKER_ID}
+      HINDSIGHT_API_ENABLE_OBSERVATIONS: ${HINDSIGHT_API_ENABLE_OBSERVATIONS}
+      HINDSIGHT_API_ENABLE_AUTO_CONSOLIDATION: ${HINDSIGHT_API_ENABLE_AUTO_CONSOLIDATION}
+      HINDSIGHT_API_REFLECT_MAX_COMPLETION_TOKENS: ${HINDSIGHT_API_REFLECT_MAX_COMPLETION_TOKENS}
+      HINDSIGHT_API_REFLECT_MAX_ITERATIONS: ${HINDSIGHT_API_REFLECT_MAX_ITERATIONS}
+      HINDSIGHT_API_RETAIN_CHUNK_SIZE: ${HINDSIGHT_API_RETAIN_CHUNK_SIZE}
+      HINDSIGHT_API_RETAIN_MAX_COMPLETION_TOKENS: ${HINDSIGHT_API_RETAIN_MAX_COMPLETION_TOKENS}
+      HINDSIGHT_API_RETAIN_LLM_PROVIDER: ${HINDSIGHT_API_RETAIN_LLM_PROVIDER}
+      HINDSIGHT_API_RETAIN_LLM_MODEL: ${HINDSIGHT_API_RETAIN_LLM_MODEL}
+    volumes:
+      - hindsight-data:/home/hindsight/.pg0
+
+volumes:
+  hindsight-data:
+    name: freelens-hindsight-data
+  postgres-data:
+    name: freelens-postgres-data
+  minio-data:
+    name: freelens-minio-data
+
