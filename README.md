@@ -7,7 +7,6 @@ and S3-compatible object storage for source files.
 ## Local services
 
 - Web app: <http://localhost:3000>
-- API and OpenAPI docs: <http://localhost:8000/docs>
 - Hindsight API: <http://localhost:8888>
 - Hindsight control plane: <http://localhost:9999>
 - MinIO API: <http://localhost:9000>
